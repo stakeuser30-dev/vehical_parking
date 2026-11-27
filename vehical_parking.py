@@ -1,20 +1,33 @@
+def calculate_parking():
+    rates = {
+        "two-wheeler": 20,
+        "four-wheeler": 50,
+        "heavy vehicle": 100
+    }
 
-vehicle_type = input("Enter vehicle type: ")
-hours = int(input("Enter parking hours: "))
+    vehicle_number = input("Enter vehicle number: ").strip().upper()
+    vehicle_type = input("Enter vehicle type (Two-wheeler / Four-wheeler / Heavy vehicle): ").strip().lower()
+    
+    if vehicle_type not in rates:
+        print("Invalid vehicle type entered.")
+        return
 
-if vehicle_type.lower() == "two-wheeler":
-    rate = 20
-elif vehicle_type.lower() == "four-wheeler":
-    rate = 50
-elif vehicle_type.lower() == "heavy vehicle":
-    rate = 100
-else:
-    rate = 0
+    try:
+        duration = float(input("Enter parking duration in hours: "))
+        if duration < 0:
+            print("Duration cannot be negative.")
+            return
+    except ValueError:
+        print("Invalid input. Please enter a numeric value for hours.")
+        return
 
-if rate == 0 or hours <= 0:
-    print("Invalid input")
-else:
-    fee = rate * hours
-    print("Vehicle Type:", vehicle_type)
-    print("Parking Duration:", hours, "hours")
-    print("Total Parking Fee: Rs.", fee)
+    total_fee = rates[vehicle_type] * duration
+
+    print("\n--- Parking Receipt ---")
+    print(f"Vehicle Number   : {vehicle_number}")
+    print(f"Vehicle Type     : {vehicle_type.capitalize()}")
+    print(f"Parking Duration : {duration} hours")
+    print(f"Total Parking Fee: Rs. {total_fee:.2f}")
+
+if __name__ == "__main__":
+    calculate_parking()
